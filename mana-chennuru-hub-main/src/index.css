@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* MANA CHENNURU Village Portal Colors */
+    --mc-primary: 144 21% 31%; /* #3E5F44 - Deep forest green */
+    --mc-secondary: 138 24% 45%; /* #5E936C - Medium sage */
+    --mc-accent: 126 68% 71%; /* #93DA97 - Fresh mint */
+    --mc-bg: 95 100% 92%; /* #E8FFD7 - Light lime */
+    
+    /* Semantic tokens mapped to village colors */
+    --background: 144 21% 15%; /* Dark background */
+    --foreground: 95 100% 95%; /* Light text for dark background */
+
+    --card: 144 21% 20%;
+    --card-foreground: 95 100% 95%;
+
+    --popover: 144 21% 20%;
+    --popover-foreground: 95 100% 95%;
+
+    --primary: 144 21% 31%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 138 24% 45%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 144 21% 25%;
+    --muted-foreground: 95 100% 80%;
+
+    --accent: 126 68% 71%;
+    --accent-foreground: 144 21% 31%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 144 21% 30%;
+    --input: 144 21% 25%;
+    --ring: 144 21% 31%;
+
+    --radius: 0.75rem;
+
+    /* Status colors */
+    --status-open: 126 68% 71%;
+    --status-closed: 0 70% 88%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    --gradient-hero: linear-gradient(180deg, hsl(var(--mc-bg)) 0%, hsl(120 40% 96%) 100%);
+    
+    /* Effects */
+    --shadow-sm: 0 2px 8px hsla(144, 21%, 31%, 0.08);
+    --shadow-md: 0 4px 16px hsla(144, 21%, 31%, 0.12);
+    --shadow-lg: 0 8px 24px hsla(144, 21%, 31%, 0.15);
+    
+    --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Glassmorphic effects */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
