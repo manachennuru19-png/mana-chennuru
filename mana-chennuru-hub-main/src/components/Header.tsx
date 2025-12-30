@@ -1,4 +1,4 @@
-import { Menu, Globe, Check } from "lucide-react";
+import { Globe, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -32,12 +32,12 @@ export const Header = () => {
           {/* Content */}
           <div className="relative flex h-14 items-center justify-between px-6">
             {/* Logo & Brand */}
-            <div className="flex items-center gap-3">
-              <div className="hidden sm:block">
-                <h1 className="text-base font-bold tracking-wide text-white drop-shadow-md">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="block">
+                <h1 className="text-sm sm:text-base font-bold tracking-wide text-white drop-shadow-md leading-tight">
                   {t("header.brand")}
                 </h1>
-                <p className="text-xs text-white/90 drop-shadow-sm">
+                <p className="text-[10px] sm:text-xs text-white/90 drop-shadow-sm leading-tight">
                   {t("header.subtitle")}
                 </p>
               </div>
@@ -77,17 +77,6 @@ export const Header = () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="md:hidden h-9 w-9 rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/30 transition-all"
-                style={{
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
-                }}
-              >
-                <Menu className="h-5 w-5 text-white" />
-              </Button>
             </div>
           </div>
         </div>

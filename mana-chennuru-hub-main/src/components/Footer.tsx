@@ -36,11 +36,11 @@ export const Footer = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <span>+91 XXXXX XXXXX</span>
+                <span>+91 8317579761</span>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <span>info@manachennuru.in</span>
+                <span>mana.chennuru19@gmail.com</span>
               </div>
             </div>
           </div>
