@@ -98,23 +98,19 @@ export const PDFViewerModal = ({ isOpen, onClose, pdfUrl, title = "PDF Document"
           {pdfUrl ? (
             <div className="w-full h-full border border-border rounded-lg bg-background overflow-hidden" style={{ minHeight: '600px' }}>
               {/* 
-                Display PDF using iframe with direct Cloudinary secure_url
+                Display PDF using embed tag for better mobile browser support
+                Embed tag works better on mobile browsers than iframe for PDFs
                 This URL should be publicly accessible if upload preset allows public access.
                 If you see 401 errors, verify in Cloudinary Dashboard:
                 1. Settings > Security > "PDF and ZIP files delivery" is ENABLED
                 2. Settings > Upload > Upload presets > Access mode is "Public"
               */}
-              <iframe
+              <embed
                 src={pdfUrl}
+                type="application/pdf"
                 className="w-full h-full"
-                title={title}
                 style={{ minHeight: '600px', border: 'none' }}
-                allow="fullscreen"
-                onError={(e) => {
-                  console.error('PDF iframe load error:', e);
-                  console.error('PDF URL:', pdfUrl);
-                  console.error('If you see 401 errors, check Cloudinary security settings for PDF delivery');
-                }}
+                title={title}
               />
             </div>
           ) : (

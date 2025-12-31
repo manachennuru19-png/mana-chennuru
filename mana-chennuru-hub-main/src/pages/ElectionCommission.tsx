@@ -29,7 +29,6 @@ import { uploadFileToCloudinary, uploadImageToCloudinary, uploadPdfToCloudinary,
 const ElectionCommission = () => {
   const { user, isAuthenticated } = useAuth();
   const { t } = useTranslation();
-  const isMobile = useIsMobile();
   const [allDocuments, setAllDocuments] = useState<ElectionCommissionDocument[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -284,15 +283,10 @@ const ElectionCommission = () => {
 
   const handleView = (url: string, title: string, fileType: 'pdf' | 'image') => {
     if (fileType === 'pdf') {
-      // On mobile, open PDF directly in new tab (mobile browsers don't support PDFs in iframes well)
-      // On desktop, open in modal with iframe
-      if (isMobile) {
-        window.open(url, '_blank');
-      } else {
-        setViewingPdfUrl(url);
-        setViewingPdfTitle(title);
-        setIsPdfViewerOpen(true);
-      }
+      // Open PDF in modal with iframe (works on both desktop and mobile)
+      setViewingPdfUrl(url);
+      setViewingPdfTitle(title);
+      setIsPdfViewerOpen(true);
     } else {
       // For images, open in image modal
       setViewingImageUrl(url);

@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Calendar, FileText, Newspaper, ExternalLink } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { PDFViewerModal } from "@/components/PDFViewerModal";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { 
   subscribeToCollection, 
   orderBy 
@@ -25,7 +24,6 @@ interface NoticeItem {
 
 export const LatestNotices = () => {
   const { t } = useTranslation();
-  const isMobile = useIsMobile();
   const [notices, setNotices] = useState<NoticeItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [electionNotices, setElectionNotices] = useState<NoticeItem[]>([]);
@@ -116,15 +114,10 @@ export const LatestNotices = () => {
 
   const handleViewNotice = (notice: NoticeItem) => {
     if (notice.pdfUrl) {
-      // On mobile, open PDF directly in new tab (mobile browsers don't support PDFs in iframes well)
-      // On desktop, open in modal with iframe
-      if (isMobile) {
-        window.open(notice.pdfUrl, '_blank');
-      } else {
-        setViewingPdfUrl(notice.pdfUrl);
-        setViewingPdfTitle(notice.title);
-        setIsPdfViewerOpen(true);
-      }
+      // Open PDF in modal with iframe (works on both desktop and mobile)
+      setViewingPdfUrl(notice.pdfUrl);
+      setViewingPdfTitle(notice.title);
+      setIsPdfViewerOpen(true);
     } else if (notice.href) {
       // Navigate to the page
       window.location.href = notice.href;
