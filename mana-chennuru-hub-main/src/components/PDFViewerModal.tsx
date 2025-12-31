@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { Download, ExternalLink } from "lucide-react";
 
 interface PDFViewerModalProps {
   isOpen: boolean;
@@ -45,7 +45,6 @@ const getDownloadUrl = (url: string): string => {
 };
 
 export const PDFViewerModal = ({ isOpen, onClose, pdfUrl, title = "PDF Document" }: PDFViewerModalProps) => {
-
   const handleDownload = () => {
     const downloadUrl = getDownloadUrl(pdfUrl);
     const link = document.createElement('a');
@@ -55,6 +54,10 @@ export const PDFViewerModal = ({ isOpen, onClose, pdfUrl, title = "PDF Document"
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleOpenInNewTab = () => {
+    window.open(pdfUrl, '_blank');
   };
 
   return (
@@ -69,6 +72,15 @@ export const PDFViewerModal = ({ isOpen, onClose, pdfUrl, title = "PDF Document"
               </DialogDescription>
             </div>
             <div className="flex items-center gap-2 shrink-0">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleOpenInNewTab}
+                className="flex items-center gap-2"
+              >
+                <ExternalLink className="h-4 w-4" />
+                Open in New Tab
+              </Button>
               <Button
                 variant="outline"
                 size="sm"

@@ -13,6 +13,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { AddEditModal } from "@/components/AddEditModal";
 import { PDFViewerModal } from "@/components/PDFViewerModal";
 import { ImageModal } from "@/components/ImageModal";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { 
   subscribeToCollection, 
   addDocument, 
@@ -28,6 +29,7 @@ import { uploadFileToCloudinary, uploadImageToCloudinary, uploadPdfToCloudinary,
 const ElectionCommission = () => {
   const { user, isAuthenticated } = useAuth();
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
   const [allDocuments, setAllDocuments] = useState<ElectionCommissionDocument[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -282,10 +284,15 @@ const ElectionCommission = () => {
 
   const handleView = (url: string, title: string, fileType: 'pdf' | 'image') => {
     if (fileType === 'pdf') {
-      // Open PDF in modal with iframe
-      setViewingPdfUrl(url);
-      setViewingPdfTitle(title);
-      setIsPdfViewerOpen(true);
+      // On mobile, open PDF directly in new tab (mobile browsers don't support PDFs in iframes well)
+      // On desktop, open in modal with iframe
+      if (isMobile) {
+        window.open(url, '_blank');
+      } else {
+        setViewingPdfUrl(url);
+        setViewingPdfTitle(title);
+        setIsPdfViewerOpen(true);
+      }
     } else {
       // For images, open in image modal
       setViewingImageUrl(url);
