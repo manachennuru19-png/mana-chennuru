@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Shops from "./pages/Shops";
 import News from "./pages/News";
 import Culture from "./pages/Culture";
+import ElectionCommission from "./pages/ElectionCommission";
 import Rentals from "./pages/Rentals";
 import Schemes from "./pages/Schemes";
 import Complaints from "./pages/Complaints";
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/shops" element={<Shops />} />
           <Route path="/news" element={<News />} />
           <Route path="/culture" element={<Culture />} />
+          <Route path="/election-commission" element={<ElectionCommission />} />
           <Route path="/rentals" element={<Rentals />} />
           <Route path="/schemes" element={<Schemes />} />
           <Route path="/complaints" element={<Complaints />} />

@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { LatestNotices } from "@/components/LatestNotices";
 import { VillageTraditionSection } from "@/components/VillageTraditionSection";
 import { SectionCard } from "@/components/SectionCard";
 import { 
@@ -15,6 +16,7 @@ import { useState } from "react";
 // Import section images
 import cultureImage from "@/assets/section-culture.jpg";
 import newsImage from "@/assets/section-news.jpg";
+import electionImage from "@/assets/images/National-voters-day-history-and-significance.jpg";
 import shopsImage from "@/assets/section-shops.jpg";
 import rentalsImage from "@/assets/section-rentals.jpg";
 import schemesImage from "@/assets/section-schemes.jpg";
@@ -49,10 +51,10 @@ const Index = () => {
       color: "secondary" as const
     },
     {
-      title: t("sections.shopsDirectory"),
-      description: t("sections.shopsDirectoryDesc"),
-      image: shopsImage,
-      href: "/shops",
+      title: t("sections.electionCommission"),
+      description: t("sections.electionCommissionDesc"),
+      image: electionImage,
+      href: "/election-commission",
       color: "accent" as const
     },
     {
@@ -131,6 +133,13 @@ const Index = () => {
       image: donationsImage,
       href: "/donations",
       color: "secondary" as const
+    },
+    {
+      title: t("sections.shopsDirectory"),
+      description: t("sections.shopsDirectoryDesc"),
+      image: shopsImage,
+      href: "/shops",
+      color: "accent" as const
     }
   ];
 
@@ -140,6 +149,9 @@ const Index = () => {
       
       <main className="flex-1">
         <Hero />
+        
+        {/* Latest Notices Section */}
+        <LatestNotices />
         
         {/* Village Tradition Section */}
         <VillageTraditionSection />

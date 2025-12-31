@@ -196,3 +196,14 @@ export interface DonationItem {
   updatedAt?: Date | any;
 }
 
+export interface ElectionCommissionDocument {
+  id?: string;
+  title: string;
+  description?: string;
+  fileType: 'pdf' | 'image';
+  fileUrl: string;
+  userId: string;
+  createdAt?: Date | any;
+  updatedAt?: Date | any;
+}
+

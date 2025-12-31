@@ -47,6 +47,8 @@
     "cultureTemplesDesc": "Explore our rich heritage, temples, festivals and cultural events.",
     "villageNews": "Village News",
     "villageNewsDesc": "Latest updates, announcements and festival information.",
+    "electionCommission": "Election Commission",
+    "electionCommissionDesc": "Official election-related announcements, voter information, notifications, and updates for the community.",
     "shopsDirectory": "Shops Directory",
     "shopsDirectoryDesc": "Find local businesses, check open/closed status and contact info.",
     "rentalHouses": "Rental Houses",
@@ -71,6 +73,15 @@
     "lostFoundDesc": "Report lost items or found belongings in the village.",
     "helpDonations": "Help & Donations",
     "helpDonationsDesc": "Community support, charity initiatives and donation opportunities."
+  },
+  "latestNotices": {
+    "title": "Latest Notices",
+    "subtitle": "Stay updated with the most recent announcements and important information",
+    "loading": "Loading notices...",
+    "electionCommission": "Election Commission",
+    "villageNews": "Village News",
+    "viewFullNotice": "View Full Notice (PDF)",
+    "viewNotice": "View Notice"
   },
   "quickActions": {
     "emergencyAlert": "Emergency Alert",
@@ -284,6 +295,22 @@
       "enterImportance": "Enter importance/history of the temple",
       "noTemples": "No temples available yet.",
       "loading": "Loading temples..."
+    },
+    "electionCommission": {
+      "title": "Election Commission",
+      "subtitle": "Official election-related announcements, voter information, notifications, and updates for the community.",
+      "loading": "Loading documents...",
+      "noDocuments": "No election documents available yet.",
+      "addDocument": "Add Document",
+      "editDocument": "Edit Document",
+      "uploadFile": "Upload File",
+      "selectFile": "Select File",
+      "changeFile": "Change File",
+      "uploading": "Uploading...",
+      "acceptedFormats": "Accepted formats: PDF, JPG, PNG (Max 10MB)",
+      "view": "View",
+      "download": "Download",
+      "onlyAdminCanUpload": "Only administrators can upload documents to this section."
     }
   },
   "messages": {
