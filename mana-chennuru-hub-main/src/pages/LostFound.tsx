@@ -10,6 +10,7 @@ import { subscribeToCollection, addDocument, updateDocument, deleteDocument, ord
 import { LostFoundItem } from "@/integrations/firebase/types";
 import { toast } from "@/hooks/use-toast";
 import { AddEditModal } from "@/components/AddEditModal";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -30,6 +31,11 @@ const LostFound = () => {
   const [category, setCategory] = useState("");
   const [contact, setContact] = useState("");
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  
+  // Delete confirmation dialog state
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deletingUserId, setDeletingUserId] = useState<string>("");
 
   useEffect(() => {
     const unsubscribe = subscribeToCollection<LostFoundItem>('lost_found_items', (items) => {
@@ -80,11 +86,23 @@ const LostFound = () => {
     }
   };
 
-  const handleDelete = async (id: string, userId: string) => {
-    if (!user?.uid || userId !== user.uid || !confirm('Are you sure?')) return;
+  const handleDeleteClick = (id: string, userId: string) => {
+    if (!user?.uid || userId !== user.uid) {
+      toast({ title: 'Error', description: 'You can only delete your own items', variant: 'destructive' });
+      return;
+    }
+    setDeletingId(id);
+    setDeletingUserId(userId);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDelete = async () => {
+    if (!deletingId || !user?.uid) return;
     try {
-      await deleteDocument('lost_found_items', id);
+      await deleteDocument('lost_found_items', deletingId);
       toast({ title: 'Success', description: 'Lost & Found item deleted successfully!' });
+      setDeletingId(null);
+      setDeletingUserId("");
     } catch (error: any) {
       toast({ title: 'Error', description: error.message || 'Failed to delete item', variant: 'destructive' });
     }
@@ -154,7 +172,7 @@ const LostFound = () => {
                   <Card key={item.id} className="p-6 hover:shadow-md transition-shadow relative group">
                     <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => openEdit(item)}><Pencil className="h-4 w-4" /></Button>
-                      <Button variant="destructive" size="icon" className="h-8 w-8" onClick={() => item.id && handleDelete(item.id, item.userId)}>×</Button>
+                      <Button variant="destructive" size="icon" className="h-8 w-8" onClick={() => item.id && handleDeleteClick(item.id, item.userId)}>×</Button>
                     </div>
                     <div className="flex items-start gap-3 mb-4">
                       <div className="p-2 bg-primary/20 rounded-lg"><Search className="h-5 w-5 text-primary" /></div>
@@ -212,6 +230,22 @@ const LostFound = () => {
         onClose={() => setSelectedImage(null)}
         imageUrl={selectedImage || ""}
         alt="Lost & Found image"
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => {
+          setIsDeleteDialogOpen(false);
+          setDeletingId(null);
+          setDeletingUserId("");
+        }}
+        onConfirm={handleDelete}
+        title="Are you sure?"
+        description="Are you sure you want to delete this item?"
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="destructive"
       />
     </div>
   );

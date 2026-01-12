@@ -19,6 +19,7 @@ import Transport from "./pages/Transport";
 import Agriculture from "./pages/Agriculture";
 import LostFound from "./pages/LostFound";
 import Donations from "./pages/Donations";
+import TiffinHotels from "./pages/TiffinHotels";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/agriculture" element={<Agriculture />} />
           <Route path="/lost-found" element={<LostFound />} />
           <Route path="/donations" element={<Donations />} />
+          <Route path="/tiffin-hotels" element={<TiffinHotels />} />
           <Route path="/login" element={<Login />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

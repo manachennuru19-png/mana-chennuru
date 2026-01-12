@@ -207,3 +207,13 @@ export interface ElectionCommissionDocument {
   updatedAt?: Date | any;
 }
 
+export interface TiffinHotel {
+  id?: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  userId: string;
+  createdAt?: Date | any;
+  updatedAt?: Date | any;
+}
+

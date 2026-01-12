@@ -17,6 +17,7 @@ import {
 import { Temple } from "@/integrations/firebase/types";
 import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 export const ChennuruTemplesSection = () => {
   const { t } = useTranslation();
@@ -29,6 +30,11 @@ export const ChennuruTemplesSection = () => {
   const [editingTemple, setEditingTemple] = useState<Temple | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  
+  // Delete confirmation dialog state
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deletingUserId, setDeletingUserId] = useState<string>("");
 
   // Subscribe to all temples (public view)
   useEffect(() => {
@@ -185,7 +191,7 @@ export const ChennuruTemplesSection = () => {
     }
   };
 
-  const handleDeleteTemple = async (templeId: string, templeUserId: string) => {
+  const handleDeleteClick = (templeId: string, templeUserId: string) => {
     if (!user?.uid || templeUserId !== user.uid) {
       toast({
         title: t("common.error"),
@@ -194,17 +200,21 @@ export const ChennuruTemplesSection = () => {
       });
       return;
     }
+    setDeletingId(templeId);
+    setDeletingUserId(templeUserId);
+    setIsDeleteDialogOpen(true);
+  };
 
-    if (!confirm(t("messages.areYouSure"))) {
-      return;
-    }
-
+  const handleDeleteTemple = async () => {
+    if (!deletingId || !user?.uid) return;
     try {
-      await deleteDocument('temples', templeId);
+      await deleteDocument('temples', deletingId);
       toast({
         title: t("common.success"),
         description: t("pages.culture.editTemple") + " " + t("messages.deletedSuccessfully"),
       });
+      setDeletingId(null);
+      setDeletingUserId("");
     } catch (error: any) {
       toast({
         title: t("common.error"),
@@ -503,6 +513,22 @@ export const ChennuruTemplesSection = () => {
           onClose={() => setSelectedImage(null)}
           imageUrl={selectedImage || ""}
           alt="Temple image"
+        />
+
+        {/* Delete Confirmation Dialog */}
+        <ConfirmDialog
+          isOpen={isDeleteDialogOpen}
+          onClose={() => {
+            setIsDeleteDialogOpen(false);
+            setDeletingId(null);
+            setDeletingUserId("");
+          }}
+          onConfirm={handleDeleteTemple}
+          title={t("messages.areYouSure")}
+          description={t("messages.areYouSure")}
+          confirmText={t("common.delete")}
+          cancelText={t("common.cancel")}
+          variant="destructive"
         />
       </div>
     </section>

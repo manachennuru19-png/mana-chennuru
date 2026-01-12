@@ -13,6 +13,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { AddEditModal } from "@/components/AddEditModal";
 import { PDFViewerModal } from "@/components/PDFViewerModal";
 import { ImageModal } from "@/components/ImageModal";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { 
   subscribeToCollection, 
@@ -53,6 +54,11 @@ const ElectionCommission = () => {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [viewingImageUrl, setViewingImageUrl] = useState<string>("");
   const [viewingImageAlt, setViewingImageAlt] = useState<string>("");
+  
+  // Delete confirmation dialog state
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deletingUserId, setDeletingUserId] = useState<string>("");
 
   // Subscribe to all documents (public view)
   useEffect(() => {
@@ -222,14 +228,30 @@ const ElectionCommission = () => {
     }
   };
 
-  const handleDelete = async (id: string, userId: string) => {
-    if (!user?.uid || userId !== user.uid || !confirm(t("messages.areYouSure"))) return;
+  const handleDeleteClick = (id: string, userId: string) => {
+    if (!user?.uid || userId !== user.uid) {
+      toast({ 
+        title: t("common.error"), 
+        description: t("messages.onlyEditOwn"), 
+        variant: 'destructive' 
+      });
+      return;
+    }
+    setDeletingId(id);
+    setDeletingUserId(userId);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDelete = async () => {
+    if (!deletingId || !user?.uid) return;
     try {
-      await deleteDocument('election_commission_documents', id);
+      await deleteDocument('election_commission_documents', deletingId);
       toast({ 
         title: t("common.success"), 
         description: t("pages.electionCommission.editDocument") + " " + t("messages.deletedSuccessfully") 
       });
+      setDeletingId(null);
+      setDeletingUserId("");
     } catch (error: any) {
       toast({ 
         title: t("common.error"), 
@@ -356,7 +378,7 @@ const ElectionCommission = () => {
                         variant="destructive"
                         size="icon"
                         className="h-8 w-8"
-                        onClick={() => doc.id && handleDelete(doc.id, doc.userId)}
+                        onClick={() => doc.id && handleDeleteClick(doc.id, doc.userId)}
                       >
                         ×
                       </Button>
@@ -665,6 +687,22 @@ const ElectionCommission = () => {
           </div>
         </div>
       </AddEditModal>
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => {
+          setIsDeleteDialogOpen(false);
+          setDeletingId(null);
+          setDeletingUserId("");
+        }}
+        onConfirm={handleDelete}
+        title={t("messages.areYouSure")}
+        description={t("messages.areYouSure")}
+        confirmText={t("common.delete")}
+        cancelText={t("common.cancel")}
+        variant="destructive"
+      />
     </div>
   );
 };

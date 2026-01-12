@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { NewsDocumentModal } from "@/components/NewsDocumentModal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ImageModal } from "@/components/ImageModal";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { 
   subscribeToCollection, 
   addDocument, 
@@ -28,6 +29,11 @@ const News = () => {
   const [editingDocument, setEditingDocument] = useState<VillageNewsDocument | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  
+  // Delete confirmation dialog state
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deletingUserId, setDeletingUserId] = useState<string>("");
 
   // Subscribe to all documents (public view)
   useEffect(() => {
@@ -153,7 +159,7 @@ const News = () => {
     }
   };
 
-  const handleDeleteDocument = async (docId: string, docUserId: string) => {
+  const handleDeleteClick = (docId: string, docUserId: string) => {
     if (!user?.uid || docUserId !== user.uid) {
       toast({
         title: 'Error',
@@ -162,17 +168,21 @@ const News = () => {
       });
       return;
     }
+    setDeletingId(docId);
+    setDeletingUserId(docUserId);
+    setIsDeleteDialogOpen(true);
+  };
 
-    if (!confirm('Are you sure you want to delete this document?')) {
-      return;
-    }
-
+  const handleDeleteDocument = async () => {
+    if (!deletingId || !user?.uid) return;
     try {
-      await deleteDocument('village_news_documents', docId);
+      await deleteDocument('village_news_documents', deletingId);
       toast({
         title: 'Success',
         description: 'Document deleted successfully!',
       });
+      setDeletingId(null);
+      setDeletingUserId("");
     } catch (error: any) {
       toast({
         title: 'Error',
@@ -290,7 +300,7 @@ const News = () => {
                         variant="destructive"
                         size="icon"
                         className="h-8 w-8"
-                        onClick={() => doc.id && handleDeleteDocument(doc.id, doc.userId)}
+                        onClick={() => doc.id && handleDeleteClick(doc.id, doc.userId)}
                       >
                         ×
                       </Button>
@@ -366,6 +376,22 @@ const News = () => {
         onClose={() => setSelectedImage(null)}
         imageUrl={selectedImage || ""}
         alt="News image"
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => {
+          setIsDeleteDialogOpen(false);
+          setDeletingId(null);
+          setDeletingUserId("");
+        }}
+        onConfirm={handleDeleteDocument}
+        title="Are you sure you want to delete this document?"
+        description="Are you sure you want to delete this document?"
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="destructive"
       />
     </div>
   );

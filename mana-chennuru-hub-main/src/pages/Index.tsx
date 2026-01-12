@@ -30,6 +30,7 @@ import galleryImage from "@/assets/section-gallery.jpg";
 import lostFoundImage from "@/assets/section-lost-found.jpg";
 import donationsImage from "@/assets/section-donations.jpg";
 import villageBeautyImage from "@/assets/images/beauty1.jpg";
+import tiffinImage from "@/assets/images/tiffin.jpg";
 
 const Index = () => {
   const { t } = useTranslation();
@@ -140,6 +141,13 @@ const Index = () => {
       image: shopsImage,
       href: "/shops",
       color: "accent" as const
+    },
+    {
+      title: t("sections.tiffinHotels"),
+      description: t("sections.tiffinHotelsDesc"),
+      image: tiffinImage,
+      href: "/tiffin-hotels",
+      color: "primary" as const
     }
   ];
 

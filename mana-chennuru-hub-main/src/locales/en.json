@@ -72,7 +72,9 @@
     "lostFound": "Lost & Found",
     "lostFoundDesc": "Report lost items or found belongings in the village.",
     "helpDonations": "Help & Donations",
-    "helpDonationsDesc": "Community support, charity initiatives and donation opportunities."
+    "helpDonationsDesc": "Community support, charity initiatives and donation opportunities.",
+    "tiffinHotels": "Tiffin Hotels",
+    "tiffinHotelsDesc": "Discover local tiffin hotels and restaurants offering daily meals and home-style food."
   },
   "latestNotices": {
     "title": "Latest Notices",
@@ -88,7 +90,7 @@
     "emergencyAlertDesc": "Immediate assistance? Click for emergency services.",
     "callNow": "Call Now →",
     "openShopsNow": "Open Shops Now",
-    "openShopsNowDesc": "42 shops currently serving customers.",
+    "openShopsNowDesc": "8+ shops currently serving customers.",
     "viewAll": "View All →",
     "latestUpdate": "Latest Update",
     "latestUpdateDesc": "Sankranti festival celebration on Jan 15.",
@@ -311,6 +313,22 @@
       "view": "View",
       "download": "Download",
       "onlyAdminCanUpload": "Only administrators can upload documents to this section."
+    },
+    "tiffinHotels": {
+      "title": "Tiffin Hotels",
+      "subtitle": "Discover local tiffin hotels and restaurants offering daily meals and home-style food.",
+      "loading": "Loading hotels...",
+      "noHotels": "No tiffin hotels available yet.",
+      "addHotel": "Add Hotel",
+      "editHotel": "Edit Hotel",
+      "hotelName": "Hotel Name",
+      "enterHotelName": "Enter hotel name",
+      "uploadImage": "Upload Image",
+      "selectImage": "Select Image",
+      "changeImage": "Change Image",
+      "uploading": "Uploading...",
+      "acceptedFormats": "Accepted formats: JPG, PNG, WebP (Max 10MB)",
+      "viewImage": "View Image"
     }
   },
   "messages": {
